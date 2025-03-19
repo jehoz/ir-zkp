@@ -3,6 +3,13 @@ name = "ir-zkp"
 version = "0.1.0"
 edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[[bin]]
+name = "prover"
+path = "src/prover/main.rs"
+
+[[bin]]
+name = "verifier"
+path = "src/verifier/main.rs"
+
 
 [dependencies]
