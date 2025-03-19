@@ -14,6 +14,7 @@ fn handle_client(stream: &mut TcpStream) {
 
 fn main() {
     println!("I am the prover");
+
     let listener = TcpListener::bind("127.0.0.1:9876").unwrap();
 
     for stream in listener.incoming() {

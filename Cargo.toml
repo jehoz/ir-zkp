@@ -5,11 +5,8 @@ edition = "2021"
 
 [[bin]]
 name = "prover"
-path = "src/prover/main.rs"
 
 [[bin]]
 name = "verifier"
-path = "src/verifier/main.rs"
-
 
 [dependencies]
