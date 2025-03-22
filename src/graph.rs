@@ -23,12 +23,16 @@ impl Graph {
 
     pub fn add_edge(&mut self, u: VertexId, v: VertexId) {
         if !self.contains_edge(u, v) {
-            if !self.edges.contains_key(&u) {
-                self.edges.insert(u, vec![]);
+            if !self.contains_vertex(u) {
+                self.add_vertex(u);
             }
 
             self.edges.get_mut(&u).unwrap().push(v);
         }
+    }
+
+    pub fn contains_vertex(&self, v: VertexId) -> bool {
+        self.edges.contains_key(&v)
     }
 
     pub fn contains_edge(&self, u: VertexId, v: VertexId) -> bool {
