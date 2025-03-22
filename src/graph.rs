@@ -1,25 +1,11 @@
-use std::collections::{hash_map::Keys, HashMap};
+use std::collections::HashMap;
 
-struct VertexId(i32);
+#[derive(Eq, Hash, PartialEq, Clone, Copy, Debug)]
+pub struct VertexId(i32);
 
 pub struct Graph {
     edges: HashMap<VertexId, Vec<VertexId>>,
     labels: HashMap<VertexId, String>,
-}
-
-pub struct Vertices<'a> {
-    edge_keys: Keys<'a, VertexId, Vec<VertexId>>,
-}
-
-impl<'a> Iterator for Vertices<'a> {
-    type Item = i32;
-
-    fn next(&mut self) -> Option<Self::Item> {
-        match self.edge_keys.next() {
-            Some(vid) => Some(vid.0),
-            None => None,
-        }
-    }
 }
 
 impl Graph {
@@ -30,9 +16,13 @@ impl Graph {
         }
     }
 
-    pub fn vertices(&self) -> Vertices {
-        Vertices {
-            edge_keys: self.edges.keys(),
-        }
+    pub fn vertices(&self) -> impl Iterator<Item = &VertexId> {
+        self.edges.keys()
+    }
+
+    pub fn edges(&self) -> impl Iterator<Item = (&VertexId, &VertexId)> {
+        self.edges
+            .iter()
+            .flat_map(|(u, vs)| vs.iter().map(move |v| (u, v)))
     }
 }
