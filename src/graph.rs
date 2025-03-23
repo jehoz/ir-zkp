@@ -31,6 +31,14 @@ impl Graph {
         }
     }
 
+    pub fn get_label(&self, u: VertexId) -> Option<String> {
+        self.labels.get(&u).cloned()
+    }
+
+    pub fn set_label(&mut self, u: VertexId, label: String) {
+        self.labels.insert(u, label);
+    }
+
     pub fn contains_vertex(&self, v: VertexId) -> bool {
         self.edges.contains_key(&v)
     }
