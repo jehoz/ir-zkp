@@ -79,17 +79,18 @@ impl Graph {
     }
 
     /// Returns an iterator traversing all of the vertices in the graph.
-    pub fn vertices(&self) -> impl Iterator<Item = VertexId> + '_ {
-        self.edges.keys().copied()
+    pub fn vertices(&self) -> impl Iterator<Item = &VertexId> {
+        self.edges.keys()
     }
 
     /// Returns an iterator traversing all of the unique edges in the graph.
-    pub fn edges(&self) -> impl Iterator<Item = (VertexId, VertexId)> + '_ {
+    pub fn edges(&self) -> impl Iterator<Item = (&VertexId, &VertexId)> {
         self.edges
             .iter()
-            .flat_map(|(u, vs)| vs.iter().map(move |v| (*u, *v)))
+            .flat_map(|(u, vs)| vs.iter().map(move |v| (u, v)))
     }
 
+    /// Returns a reference to the inner adjacency list encoding the graph's edges.
     pub fn adjacency_list(&self) -> &HashMap<VertexId, Vec<VertexId>> {
         &self.edges
     }
