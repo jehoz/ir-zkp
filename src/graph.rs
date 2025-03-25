@@ -18,6 +18,18 @@ impl Graph {
         }
     }
 
+    /// Constructs a graph from a given adjacency list.
+    pub fn from_adjacency_list(adj_list: HashMap<VertexId, Vec<VertexId>>) -> Graph {
+        let mut g = Graph::new();
+        for (u, v) in adj_list
+            .iter()
+            .flat_map(|(u, vs)| vs.iter().map(move |v| (*u, *v)))
+        {
+            g.add_edge(u, v);
+        }
+        g
+    }
+
     /// Inserts a vertex with specified vertex ID.  
     /// If a vertex with that ID already exists in the graph, this function does nothing.
     pub fn add_vertex(&mut self, v: VertexId) {
@@ -76,5 +88,9 @@ impl Graph {
         self.edges
             .iter()
             .flat_map(|(u, vs)| vs.iter().map(move |v| (*u, *v)))
+    }
+
+    pub fn adjacency_list(&self) -> &HashMap<VertexId, Vec<VertexId>> {
+        &self.edges
     }
 }
