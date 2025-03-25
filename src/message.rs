@@ -4,13 +4,13 @@ use serde::{Deserialize, Serialize};
 
 use crate::graph::VertexId;
 
-enum VerifierMessage {
+pub enum VerifierMessage {
     RequestGraphInfo,
     RequestLockedSolution,
     RevealEdgeOnLockedSolution(VertexId, VertexId),
 }
 
-enum ProverMessage {
+pub enum ProverMessage {
     GraphInfo {
         adjacency_list: HashMap<VertexId, Vec<VertexId>>,
         colors: Vec<String>,
@@ -22,7 +22,7 @@ enum ProverMessage {
 }
 
 #[derive(Serialize, Deserialize)]
-struct VertexColor {
+pub struct VertexColor {
     color: String,
     nonce: String,
 }
