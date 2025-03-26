@@ -1,19 +1,15 @@
-use std::{
-    io::{Read, Write},
-    net::TcpStream,
-};
+use std::net::TcpStream;
+
+use ir_zkp::message::{read_message, write_message, ProverMessage, VerifierMessage};
 
 fn main() {
     println!("I am the verifier");
 
     let mut stream = TcpStream::connect("127.0.0.1:9876").unwrap();
 
-    stream
-        .write(b"hi its me peter griffin from family guy.")
-        .unwrap();
+    write_message(&mut stream, VerifierMessage::RequestGraphInfo).unwrap();
 
-    let mut buf = [0; 256];
-    stream.read(&mut buf).unwrap();
+    let response: ProverMessage = read_message(&mut stream).unwrap();
 
-    println!("Server says: {}", String::from_utf8_lossy(&buf));
+    println!("Server says: {:?}", response);
 }
